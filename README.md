@@ -1,2 +1,2 @@
-# Python-Baseball - Draft Project
-Building Baseball Data Visualizations with Python
+# Building Baseball Data Visualizations with Python - Draft Project
+Not ready for use
