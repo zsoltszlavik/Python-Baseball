@@ -17,7 +17,8 @@ for file in files:
 data = pd.DataFrame(attendances)
 data.columns = ["year", "attendance"]
 
-data.year = pd.to_numeric(data.year.str.extract(r'^(\d{4})', expand=False))
+year = data.year.str.extract(r'^(\d{4})', expand=False)
+data.year = pd.to_numeric(year)
 data.attendance = pd.to_numeric(data.attendance)
 
 data.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
