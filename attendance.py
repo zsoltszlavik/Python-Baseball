@@ -8,8 +8,8 @@ files.sort()
 
 attendances = []
 for file in files:
-  with open (os.path.join(os.getcwd(), 'games', file), 'rt') as in_file:
-    for line in in_file:
+  with open (os.path.join(os.getcwd(), 'games', file), 'rt') as current:
+    for line in current:
       row = line.rstrip().split(',')
       if 'attendance' in row:
         attendances.append([file, row[2]])
