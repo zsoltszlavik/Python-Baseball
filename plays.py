@@ -20,4 +20,4 @@ for file in files:
         play_rows.append(row)
 
 play_frame = pd.DataFrame(play_rows).drop(0, axis=1)
-print(play_frame.head())
+print(play_frame)
