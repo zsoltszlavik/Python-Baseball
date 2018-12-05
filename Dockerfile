@@ -1,8 +1,6 @@
 FROM codeschool/projects-cli:${PROJECTS_CLI_BUILD_TAG:-latest} as projects-cli
 FROM python:3.6-alpine
 
-# Alpine Linux doesn't ship with Bash by default
-# So we do the smallest possible install, including a few other required utilities
 RUN apk add --no-cache libpng freetype libstdc++ python py-pip bash shadow nodejs git
 RUN apk add --no-cache --virtual .build-deps \
         gcc \
