@@ -15,7 +15,7 @@ for game_file in game_files:
 
 games = pd.concat(game_frames)
 
-identifiers = games.multi2.str.extract(r'((?:N|A)LS(\d{4})\d{5})')
+identifiers = games.multi2.str.extract(r'(.LS(\d{4})\d{5})')
 identifiers = identifiers.fillna(method='ffill')
 identifiers.columns = ['game_id', 'year']
 
