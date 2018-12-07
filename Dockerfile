@@ -30,4 +30,3 @@ RUN ["touch", "/home/psprojects/.bashrc"]
 
 # copy the projects-cli from it's container image.
 COPY --from=projects-cli /opt/projects-cli /opt/projects-cli
-
