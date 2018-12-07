@@ -1,20 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from data import info
+from data import games
 
-attendance = info[info.key == 'attendance']
+attendance = games[games['multi2'] == 'attendance']
 
-years = attendance.game_id.str.extract(r'^(?:N|A)LS(\d{4})', expand=False).values
-attendance = attendance.assign(year=years)
+attendance = attendance[['year', 'multi3']].apply(pd.to_numeric)
+attendance.columns = ['year', 'attendance']
 
-visual = attendance[['year', 'value']].apply(pd.to_numeric)
-visual.columns = ['year', 'attendance']
-
-visual.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
+attendance.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
 
 plt.xlabel('Year')
 plt.ylabel('Attendance')
-plt.axhline(y=visual.attendance.mean(), label='Mean', linestyle='--', color='green')
+plt.axhline(y=attendance.attendance.mean(), label='Mean', linestyle='--', color='green')
 
 plt.show()
