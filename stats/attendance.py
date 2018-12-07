@@ -1,29 +1,20 @@
-import os
 import pandas as pd
 import matplotlib.pyplot as plt
 
-games_directory = os.path.join(os.getcwd(), 'games')
-files = [fn for fn in os.listdir(games_directory) if fn.endswith(".EVE")]
-files.sort()
+from data import info
 
-attendances = []
-for file in files:
-  with open (os.path.join(os.getcwd(), 'games', file), 'rt') as current:
-    for line in current:
-      row = line.rstrip().split(',')
-      if 'attendance' in row:
-        attendances.append([file, row[2]])
+attendance = info[info.key == 'attendance']
 
-data = pd.DataFrame(attendances)
-data.columns = ["year", "attendance"]
+years = attendance.game_id.str.extract(r'^(?:N|A)LS(\d{4})', expand=False).values
+attendance = attendance.assign(year=years)
 
-year = data.year.str.extract(r'^(\d{4})', expand=False)
-data.year = pd.to_numeric(year)
-data.attendance = pd.to_numeric(data.attendance)
+visual = attendance[['year', 'value']].apply(pd.to_numeric)
+visual.columns = ['year', 'attendance']
 
-data.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
+visual.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
+
 plt.xlabel('Year')
 plt.ylabel('Attendance')
-plt.axhline(y=data.attendance.mean(), label='Mean', linestyle='--', color='green')
+plt.axhline(y=visual.attendance.mean(), label='Mean', linestyle='--', color='green')
 
 plt.show()
