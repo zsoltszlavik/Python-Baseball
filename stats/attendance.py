@@ -3,12 +3,14 @@ import matplotlib.pyplot as plt
 
 from data import games
 
-info = games.loc[games['type'] == 'info']
+info = games[games['type'] == 'info']
 
-attendance = info.loc[info['multi2'] == 'attendance']
+attendance = info[info['multi2'] == 'attendance']
 
-attendance = attendance.loc[:, ['year', 'multi3']].apply(pd.to_numeric)
+attendance = attendance[['year', 'multi3']]
 attendance.columns = ['year', 'attendance']
+
+attendance['attendance'] = pd.to_numeric(attendance['attendance'])
 
 attendance.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')
 
