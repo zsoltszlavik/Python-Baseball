@@ -15,12 +15,16 @@ for game_file in game_files:
 
 games = pd.concat(game_frames)
 
-games.multi5 = games.multi5.replace({"??": ""})
+games.loc[:, 'multi5'] = games['multi5'].replace('??', '')
 
-identifiers = games.multi2.str.extract(r'(.LS(\d{4})\d{5})')
+identifiers = games.loc[:, 'multi2'].str.extract(r'(.LS(\d{4})\d{5})')
 identifiers = identifiers.fillna(method='ffill')
 identifiers.columns = ['game_id', 'year']
 
 games = pd.concat([games, identifiers], axis=1, sort=False)
 
 games = games.fillna(' ')
+
+games.loc[:, 'type'] = pd.Categorical(games.loc[:, 'type'])
+
+# print("{0:.2f} MB".format(games.memory_usage().sum() / (1024 * 1024)))s
