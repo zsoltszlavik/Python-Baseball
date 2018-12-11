@@ -17,15 +17,11 @@ replacements = {
 }
 
 hits.loc[:, 'inning'] = hits.loc[:, 'inning'].apply(pd.to_numeric)
-
 hit_type = hits.loc[:, 'event'].replace(replacements, regex=True)
-
 hits = hits.assign(hit_type=hit_type)
 
 hits = hits.groupby(['inning', 'hit_type']).size().reset_index(name='count')
-
 hits.loc[:, 'hit_type'] = pd.Categorical(hits.loc[:, 'hit_type'], ['single', 'double', 'triple', 'hr'])
-
 hits = hits.sort_values(['inning', 'hit_type'])
 
 hits = hits.pivot(index='inning', columns='hit_type', values='count')

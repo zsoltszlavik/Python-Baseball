@@ -26,5 +26,3 @@ games = pd.concat([games, identifiers], axis=1, sort=False)
 games = games.fillna(' ')
 
 games.loc[:, 'type'] = pd.Categorical(games.loc[:, 'type'])
-
-# print("{0:.2f} MB".format(games.memory_usage().sum() / (1024 * 1024)))s
