@@ -18,6 +18,9 @@ for game_file in game_files:
 # LO: Pandas appending data frames
 games = pd.concat(game_frames)
 
+# LO: Pandas change values `loc`
+games.loc[games['multi5'] == '??', 'multi5'] = ''
+
 # LO: Pandas string methods (extract)
 identifiers = games['multi2'].str.extract(r'(.LS(\d{4})\d{5})')
 
