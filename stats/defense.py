@@ -5,18 +5,18 @@ import matplotlib.pyplot as plt
 
 from data import games
 
-der = games.query("type == 'play' & event != 'NP'")
-der.columns = ['type', 'inning', 'team', 'player', 'count', 'pitches', 'event', 'game_id', 'year']
+plays = games.query("type == 'play' & event != 'NP'")
+plays.columns = ['type', 'inning', 'team', 'player', 'count', 'pitches', 'event', 'game_id', 'year']
 
-pa = der.loc[der['player'].shift() != der['player'], ['year', 'game_id', 'inning', 'team', 'player']]
+pa = plays.loc[plays['player'].shift() != plays['player'], ['year', 'game_id', 'inning', 'team', 'player']]
 pa = pa.groupby(['year', 'game_id', 'team']).size().reset_index(name='PA')
 
-der = der.query("~(event.str.contains('^\d+') & ~event.str.contains('E'))")
-der = der.query("~event.str.contains('^(?:P|C|F|I|O)')")
+plays = plays.query("~(event.str.contains('^\d+') & ~event.str.contains('E'))")
+plays = plays.query("~event.str.contains('^(?:P|C|F|I|O)')")
 
-der = der.drop(['type', 'player', 'count', 'pitches'], axis=1)
+plays = plays.drop(['type', 'player', 'count', 'pitches'], axis=1)
 
-der = der.sort_values(['team', 'inning']).reset_index()
+plays = plays.sort_values(['team', 'inning']).reset_index()
 
 replacements = {
   r'^(?:S|D|T).*': 'H',
@@ -28,18 +28,18 @@ replacements = {
   r'.*E.*': 'E',
 }
 
-event_type = der['event'].replace(replacements, regex=True)
-der = der.assign(event_type=event_type)
-der = der.groupby(['year', 'game_id', 'team', 'event_type']).size().reset_index(name='count')
-der = der.set_index(['year', 'game_id', 'team', 'event_type'])
-der = der.unstack()
-der = der.fillna(0)
-der = der.reset_index()
-der.columns = der.columns.droplevel()
-der.columns = ['year', 'game_id', 'team', 'BB', 'E', 'H', 'HBP', 'HR', 'ROE', 'SO']
-der = der.rename_axis(None, axis="columns")
+event_type = plays['event'].replace(replacements, regex=True)
+plays = plays.assign(event_type=event_type)
+plays = plays.groupby(['year', 'game_id', 'team', 'event_type']).size().reset_index(name='count')
+plays = plays.set_index(['year', 'game_id', 'team', 'event_type'])
+plays = plays.unstack()
+plays = plays.fillna(0)
+plays = plays.reset_index()
+plays.columns = plays.columns.droplevel()
+plays.columns = ['year', 'game_id', 'team', 'BB', 'E', 'H', 'HBP', 'HR', 'ROE', 'SO']
+plays = plays.rename_axis(None, axis="columns")
 
-der = pd.merge(der, pa, how='outer', left_on=['year', 'game_id', 'team'], right_on=['year', 'game_id', 'team'])
+plays = pd.merge(plays, pa, how='outer', left_on=['year', 'game_id', 'team'], right_on=['year', 'game_id', 'team'])
 
 info = games.query("type == 'info' & (multi2 == 'visteam' | multi2 == 'hometeam')")
 info = info.loc[:, ['year', 'game_id', 'multi2', 'multi3']]
@@ -50,8 +50,16 @@ info.loc[info['team'] == 'hometeam', 'team'] = '0'
 
 info = info.sort_values(['year', 'game_id', 'team']).reset_index(drop=True)
 
-der = pd.merge(der, info).drop(['team'], axis=1)
+plays = pd.merge(plays, info).drop(['team'], axis=1)
 
-der.loc[:, 'der'] = 1 - ((der['H'] + der['ROE']) / (der['PA'] - der['BB'] - der['SO'] - der['HBP'] - der['HR']))
+plays.loc[:, 'DER'] = 1 - ((plays['H'] + plays['ROE']) / (plays['PA'] - plays['BB'] - plays['SO'] - plays['HBP'] - plays['HR']))
 
-print(der)
+plays['year'] = pd.to_numeric(plays['year'])
+
+der = plays.loc[plays['year'] >= 1998, ['year', 'defense', 'DER']]
+
+der = der.pivot(index='year', columns='defense', values='DER')
+
+der.plot(x_compat=True, xticks=range(1998, 2018, 4), rot=45)
+
+plt.show()
