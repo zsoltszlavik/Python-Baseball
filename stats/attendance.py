@@ -8,7 +8,7 @@ info = games[games['type'] == 'info']
 attendance = info[info['multi2'] == 'attendance']
 
 # LO: Pandas selection (columns by label)
-attendance = attendance[['year', 'multi3']]
+attendance = attendance.loc[:, ['year', 'multi3']]
 attendance.columns = ['year', 'attendance']
 
 # LO: Pandas datatype conversion
