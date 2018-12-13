@@ -4,15 +4,11 @@ import matplotlib.pyplot as plt
 from data import games
 
 # LO: Pandas selection (row by boolean)
-info = games[games['type'] == 'info']
-attendance = info[info['multi2'] == 'attendance']
-
-# LO: Pandas selection (columns by label)
-attendance = attendance.loc[:, ['year', 'multi3']]
+attendance = games.loc[(games['type'] == 'info') & (games['multi2'] == 'attendance'), ['year', 'multi3']]
 attendance.columns = ['year', 'attendance']
 
 # LO: Pandas datatype conversion
-attendance['attendance'] = pd.to_numeric(attendance['attendance'])
+attendance.loc[:, 'attendance'] = pd.to_numeric(attendance.loc[:, 'attendance'])
 
 # LO: Pandas plotting and plot formatting
 attendance.plot(x='year', y='attendance', figsize=(15, 7), kind='bar')

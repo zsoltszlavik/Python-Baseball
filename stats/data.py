@@ -3,8 +3,7 @@ import glob
 import pandas as pd
 
 # LO: Python File management
-games_directory = os.path.join(os.getcwd(), 'games')
-game_files = glob.glob(os.path.join(games_directory, '*.EVE'))
+game_files = glob.glob(os.path.join(os.getcwd(), 'games', '*.EVE'))
 game_files.sort()
 
 game_frames = []
@@ -37,4 +36,4 @@ games = pd.concat([games, identifiers], axis=1, sort=False)
 games = games.fillna(' ')
 
 # LO: Pandas enum
-games['type'] = pd.Categorical(games['type'])
+games.loc[:, 'type'] = pd.Categorical(games.loc[:, 'type'])
