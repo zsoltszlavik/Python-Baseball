@@ -11,7 +11,7 @@ plays.columns = ['type', 'inning', 'team', 'player', 'count', 'pitches', 'event'
 hits = plays.loc[plays['event'].str.contains('^(?:S(?!B)|D|T|HR)'), ['inning', 'event']]
 
 # LO: Pandas datatype conversion
-hits['inning'] = pd.to_numeric(hits['inning'])
+hits.loc[:, 'inning'] = pd.to_numeric(hits.loc[:, 'inning'])
 
 # LO: Pandas replace values in column
 replacements = {
