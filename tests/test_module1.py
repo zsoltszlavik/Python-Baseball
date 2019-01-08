@@ -1,27 +1,22 @@
 import pytest
-import matplotlib
-matplotlib.use('Agg')
 
 from .utils import *
+
 from stats import data
 
 @pytest.mark.test_import_builtin_libraries_module1
 def test_import_builtin_libraries_module1():
     assert 'os' in dir(data), 'Have you imported the `os` built-in library?'
-    assert 'pd' in dir(data), 'Have you imported `pandas` as `pd`?'
-    assert 'plt' in dir(data), 'Have you imported the `matplotlib.pyplot` as `plt`?'
-
-@pytest.mark.test_import_builtin_libraries_module1
-def test_import_builtin_libraries_module1():
-    pass
+    assert 'glob' in dir(data), 'Have you imported the `os` built-in library?'
 
 @pytest.mark.test_import_pandas_module1
 def test_import_pandas_module1():
-    pass
+    assert 'pd' in dir(data), 'Have you imported `pandas` as `pd`?'
 
 @pytest.mark.test_python_file_management_module1
 def test_python_file_management_module1():
-    pass
+    print(get_functions(data))
+    assert False
 
 @pytest.mark.test_glob_function_arguments_module1
 def test_glob_function_arguments_module1():
