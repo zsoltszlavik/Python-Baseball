@@ -5,7 +5,8 @@ import os
 import collections
 
 def ast_to_dict(node):
-    def _flatten(d, parent_key='', sep='_'):
+    count = 1
+    def _flatten(d, parent_key='', sep=':'):
         items = []
         for k, v in d.items():
             new_key = parent_key + sep + k if parent_key else k
@@ -16,15 +17,21 @@ def ast_to_dict(node):
         return dict(items)
 
     def _format(node):
+        nonlocal count
         if isinstance(node, ast.AST):
-            result = {} 
+            result = {}
             for key, value in ast.iter_fields(node):
                 if key != 'ctx':
-                    result[key] = _format(value)
+                    if key == 's':
+                        result['s' + str(count)] = _format(value)
+                        count += 1
+                    else:
+                        result[key] = _format(value)
+
             return _flatten(result)
 
         elif isinstance(node, list):
-            return [_flatten(_format(node_list)) for node_list in node]
+            return collections.ChainMap(*[_format(node_list) for node_list in node])
 
         return repr(node)
     if not isinstance(node, ast.AST):
