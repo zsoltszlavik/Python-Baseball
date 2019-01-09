@@ -4,7 +4,7 @@ import json
 import os
 import collections
 
-def ast_to_dict(node):
+def convert_ast(node, return_type='string', sep=':'):
     count = 1
     def _flatten(d, parent_key='', sep=':'):
         items = []
@@ -22,38 +22,41 @@ def ast_to_dict(node):
             result = {}
             for key, value in ast.iter_fields(node):
                 if key != 'ctx':
-                    if key == 's':
-                        result['s' + str(count)] = _format(value)
-                        count += 1
-                    else:
-                        result[key] = _format(value)
+                    result[key] = _format(value)
 
             return _flatten(result)
 
         elif isinstance(node, list):
-            return collections.ChainMap(*[_format(node_list) for node_list in node])
+            return [_format(node_list) for node_list in node]
 
-        return repr(node)
+        return str(node)
+
     if not isinstance(node, ast.AST):
         raise TypeError('expected AST, got %r' % node.__class__.__name__)
-    return _format(node)
+
+    if return_type == 'string':
+        return sep.join(_format(node).values())
+    elif return_type == 'list':
+        return list(_format(node).values())
+    else:
+        return _format(node)
 
 def get_functions(source):
-    functions = []
+    function_calls = []
 
     def visit_Call(node):
-        functions.append(ast_to_dict(node))
+        function_calls.append(convert_ast(node, 'dict'))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_Call = visit_Call
     node_iter.visit(ast.parse(inspect.getsource(source)))
-    return functions
+    return function_calls
 
 def get_functions_returns(source):
     returns = []
 
     def visit_Return(node):
-        returns.append(ast_to_dict(node))
+        returns.append(convert_ast(node))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_Return = visit_Return
@@ -64,7 +67,7 @@ def get_statements(source):
     statements = []
 
     def visit_If(node):
-        statements.append(ast_to_dict(node))
+        statements.append(convert_ast(node))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_If = visit_If
