@@ -4,7 +4,7 @@ import json
 import os
 import collections
 
-def convert_ast(node, return_type='string', sep=':'):
+def convert_ast(node, return_type='string', include_type=False, sep=':'):
     count = 1
     def _flatten_dict(d, parent_key='', sep=':'):
         items = []
@@ -22,7 +22,12 @@ def convert_ast(node, return_type='string', sep=':'):
     def _format(node):
         nonlocal count
         if isinstance(node, ast.AST):
-            return _flatten_dict({ key: _format(value) for key, value in ast.iter_fields(node) if key != 'ctx'})
+            d = _flatten_dict({ key: _format(value) for key, value in ast.iter_fields(node) if key != 'ctx'})
+
+            if include_type:
+                d['type'] = node.__class__.__name__
+
+            return d
 
         elif isinstance(node, list):
             return sep.join(_flatten_list([value for list_node in node for value in _format(list_node).values() if value]))
@@ -40,35 +45,48 @@ def convert_ast(node, return_type='string', sep=':'):
     else:
         return _format(node)
 
-def get_calls(source, return_type='string'):
+def get_calls(source, return_type='string', include_type=False):
     calls = []
 
     def visit_Call(node):
-        calls.append(convert_ast(node, return_type))
+        calls.append(convert_ast(node, return_type, include_type))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_Call = visit_Call
-    node_iter.visit(ast.parse(inspect.getsource(source)))
+    try:
+        node_iter.visit(ast.parse(inspect.getsource(source)))
+    except OSError:
+        return []
+
     return calls
 
-def get_assignments(source, return_type='string'):
+def get_assignments(source, return_type='string', include_type=False):
     assignments = []
 
     def visit_Assign(node):
-        assignments.append(convert_ast(node, return_type))
+        assignments.append(convert_ast(node, return_type, include_type))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_Assign = visit_Assign
-    node_iter.visit(ast.parse(inspect.getsource(source)))
+
+    try:
+        node_iter.visit(ast.parse(inspect.getsource(source)))
+    except OSError:
+        return []
+
     return assignments
 
-def get_for_loops(source, return_type='string'):
-    assignments = []
+def get_for_loops(source, return_type='string', include_type=False):
+    loops = []
 
     def visit_For(node):
-        assignments.append(convert_ast(node, return_type))
+        loops.append(convert_ast(node, return_type, include_type))
 
     node_iter = ast.NodeVisitor()
     node_iter.visit_For = visit_For
-    node_iter.visit(ast.parse(inspect.getsource(source)))
-    return assignments
+    try:
+        node_iter.visit(ast.parse(inspect.getsource(source)))
+    except OSError:
+        return []
+
+    return loops

@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from data import games
+from .data import games
 
 plays_frame = games.query("type == 'play' & event != 'NP'")
 plays_frame.columns = ['type', 'inning', 'team', 'player', 'count', 'pitches', 'event', 'game_id', 'year']

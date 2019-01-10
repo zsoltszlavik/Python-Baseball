@@ -115,7 +115,7 @@ To ensure that the `games` DataFrame contains the correct data print the first f
 
 **Hint: use the `head()` function.**
 
-Finally, run the `data.py` file with this command at the terminal: `python3 data.py`
+Finally, run the `data.py` file with this command at the terminal: `python3 stats/data.py`
 
 ---
 
@@ -141,7 +141,7 @@ Below the pandas import, import `matplotlib.pyplot` as `plt`.
 
 ## Import `games` DataFrame
 
-The final import should import the `games` DataFrame from `data.py`.
+The final import should import the `games` DataFrame from `.data`.
 
 ## Select Attendance
 
@@ -204,7 +204,7 @@ Open the file called `pitching.py`, this modules file, in the `stats` folder.
 
 At the top, you will find that `pandas` and `matplotlib` have already been imported.
 
-The `games` DataFrame has been imported from `data` as well.
+Import the `games` DataFrame from `.data`.
 
 With access to the `games` DataFrame we can condense the data to just rows of type `play`. 
 
@@ -268,7 +268,9 @@ Don't forget to show the plot.
 
 ## Select All Plays
 
-In the file called `offense.py` in the `stats` folder. You will find similar imports as the last module. The core being the `games` DataFrame import.
+In the file called `offense.py` in the `stats` folder. You will find similar imports as the last module.
+
+Import the `games` DataFrame from `.data`.
 
 With access to the `games` DataFrame, select all rows that have a `type` of `play`. Use the shortcut method. **Hint: square brackets, simple boolean comparison.**
 
@@ -354,7 +356,7 @@ In this module we will answer the question: 'What is the DER by league since 197
 
 Open `defense.py` and keep it open for the duration of the module. At the top import `pandas` as `pd`. Next, import `matplotlib.pyplot` as `plt`.
 
-For this module there are three DataFrames that have been prepared: `games`, `info` and `events`. Import them from `frames`.
+For this module there are three DataFrames that have been prepared: `games`, `info` and `events`. Import them from `.frames`.
 
 ## Query Function	
 
@@ -446,7 +448,7 @@ Add a new column to the `defense` DataFrame with `defense.loc[:, 'DER']`
 
 Set this equal to the calculation: 1 - ((H + ROE) / (PA - BB - SO - HBP - HR)), pulling each of these as a column from the `defense` DataFrame.
 
-Convert the `year` column of the `defense` DataFrame to numeric values with `loc[]` and pd.to_numeric()`.
+Convert the `year` column of the `defense` DataFrame to numeric values with `loc[]` and `pd.to_numeric()`.
 
 ## Reshape With Pivot
 
@@ -462,6 +464,4 @@ For the DER plot, we will use the default line plot type.
 
 Call plot on `der` with a few keyword arguments `x_compat` set to `True`, `xticks` set to a `range(1978, 2018, 4)` and rotate the labels by 45 degrees with `rot=45`. 
 
-Show the `der` plot with `plt.show()`. 
-
- 
+Show the `der` plot with `plt.show()`.
