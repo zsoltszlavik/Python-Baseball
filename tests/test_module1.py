@@ -46,28 +46,28 @@ def test_clean_values_module1():
 
 @pytest.mark.test_extract_identifiers_module1
 def test_extract_identifiers_module1():
-    assert 'identifiers:games:multi2:str:extract:(.LS(\\d{4})\\d{5})' in get_assignments(data), ''
+    assert 'identifiers:games:multi2:str:extract:(.LS(\\d{4})\\d{5})' in get_assignments(data), 'Have the `year` and `game_id` been extracted?'
 
 @pytest.mark.test_forward_fill_identifiers_module1
 def test_forward_fill_identifiers_module1():
-    assert 'identifiers:identifiers:fillna:method:ffill' in get_assignments(data), ''
+    assert 'identifiers:identifiers:fillna:method:ffill' in get_assignments(data), 'Have the `game_id` and `year` columns been filled with the correct values?'
 
 @pytest.mark.test_rename_columns_module1
 def test_rename_columns_module1():
-    assert 'identifiers:columns:game_id:year' in get_assignments(data), ''
+    assert 'identifiers:columns:game_id:year' in get_assignments(data), 'The column labels of the `identifiers` DataFrame should be `game_id` and `year`.'
 
 @pytest.mark.test_concatenate_identifier_columns_module1
 def test_concatenate_identifier_columns_module1():
-    assert 'games:pd:concat:games:identifiers:axis:1:sort:False' in get_assignments(data), ''
+    assert 'games:pd:concat:games:identifiers:axis:1:sort:False' in get_assignments(data), 'Concatenate the `games` and `identifiers` DataFrames.'
 
 @pytest.mark.test_fill_nan_values_module1
 def test_fill_nan_values_module1():
-    assert 'games:games:fillna: ' in get_assignments(data), '.'
+    assert 'games:games:fillna: ' in get_assignments(data), 'The NaN values in the `identifiers` DataFrames have not been fill with a space'
 
 @pytest.mark.test_categorical_event_type_module1
 def test_categorical_event_type_module1():
-    assert 'games:loc:None:None:None:type:pd:Categorical:games:loc:None:None:None:type' in get_assignments(data), ''
+    assert 'games:loc:None:None:None:type:pd:Categorical:games:loc:None:None:None:type' in get_assignments(data), 'Save some memory by making the type column Categorical.'
 
 @pytest.mark.test_print_dataframe_module1
 def test_print_dataframe_module1():
-    assert 'print:games:head' in get_calls(data), ''
+    assert 'print:games:head' in get_calls(data), 'To check the `games` DataFrame print the first five rows.'
