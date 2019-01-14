@@ -354,7 +354,7 @@ As always, show the plot.
 
 In this module we will answer the question: 'What is the DER by league since 1978.'
 
-Open `defense.py` and keep it open for the duration of the module. At the top import `pandas` as `pd`. Next, import `matplotlib.pyplot` as `plt`.
+Open `defense.py` and keep it open for the duration of the module. Pandas and Matplotlib have been imported.
 
 For this module there are three DataFrames that have been prepared: `games`, `info` and `events`. Import them from `.frames`.
 
