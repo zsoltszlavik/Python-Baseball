@@ -30,15 +30,13 @@ To better prepare the `game_files` list for reading into pandas, sort it in plac
 
 **Note: There are two sorting functions in Python. To sort in place use `list.sort()`, not `sorted(list)` which returns a new list.**
 
-## Read CSV's
+## Read CSV Files
 
 The `game_files` list now contains a sorted list of file names i.e. `['1933AS.EVE', '1934AS.EVE', ..., '2017AS.EVE', '2018AS.EVE']`
 
 To read each of these files into Pandas create a `for in` loop that loops through `game_files`, call the current file `game_file`
 
-In the body of the `for in` loop use the `pd.read_csv()` function to read the current file `game_file` into a Pandas DataFrame called `event_frame`.
-
-## Read CSV Arguments
+In the body of the `for in` loop use the `pd.read_csv()` function to read the current file `game_file` into a Pandas DataFrame called `game_frame`.
 
 Now that the current `game_file` is being passed to `pd.read_csv()`, add a keyword argument to the `pd.read_csv()` call of  `names` set equal to a list with the values: `'type'`, `'multi2'`, `'multi3'`, `'multi4'`, `'multi5'`, `'multi6'`,  and `'event'`.
 

@@ -20,19 +20,15 @@ def test_python_file_management_module1():
 def test_sorting_file_names_module1():
     assert 'game_files:sort' in get_calls(data), 'Are you sorting the `game_files` in-place with sort()?'
 
-@pytest.mark.test_read_csvs_module1
+@pytest.mark.test_read_csv_files_module1
 def test_read_csvs_module1():
     assert len(get_for_loops(data, 'dict')) != 0, 'Do you have a for loop that loops through the `game_files`?'
     assert get_for_loops(data, 'dict')[0]['target:id'] == 'game_file' and get_for_loops(data, 'dict')[0]['iter:id'] == 'game_files', 'Do you have a for loop that loops through the `game_files`?'
-    assert get_for_loops(data, 'dict')[0]['body'].startswith('game_frame:pd:read_csv:game_file'), 'Do you have a for loop that loops through the `game_files`?'
-
-@pytest.mark.test_read_csv_arguments_module1
-def test_read_csv_arguments_module1():
-    assert len(get_for_loops(data, 'dict')) != 0, 'Do you have a for loop that loops through the `game_files`?'
     assert get_for_loops(data, 'dict')[0]['body'] == 'game_frame:pd:read_csv:game_file:names:type:multi2:multi3:multi4:multi5:multi6:event:game_frames:append:game_frame', 'Do you have a for loop that loops through the `game_files`?'
 
 @pytest.mark.test_append_event_frames_module1
 def test_append_event_frames_module1():
+    assert 'game_frames' in get_assignments(data), 'Has the `game_frames` list been created?'
     assert 'game_frames:append:game_frame' in get_calls(data), 'Are you appending the current `game_frame` to `game_frames`?'
 
 @pytest.mark.test_concatenate_dataframes_module1
@@ -41,7 +37,7 @@ def test_concatenate_dataframes_module1():
 
 @pytest.mark.test_clean_values_module1
 def test_clean_values_module1():
-    assert 'games:loc:games:multi5:??:multi5' in get_assignments(data), 'Are you replacing the value `??` with an empty string?'
+    assert 'games:loc:games:multi5:??:multi5' in get_assignments(data), 'Are you replacing the `??` value in the `multi5` column with an empty string?'
 
 @pytest.mark.test_extract_identifiers_module1
 def test_extract_identifiers_module1():
@@ -69,4 +65,4 @@ def test_categorical_event_type_module1():
 
 @pytest.mark.test_print_dataframe_module1
 def test_print_dataframe_module1():
-    assert 'print:games:head' in get_calls(data), 'To check the `games` DataFrame print the first five rows.'
+    assert 'print:games:head' in get_calls(data) or 'print:games:head:5' in get_calls(data), 'To check the `games` DataFrame, print the first five rows.'

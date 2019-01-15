@@ -7,6 +7,7 @@ from stats import pitching
 
 @pytest.mark.test_select_all_plays_module3
 def test_select_all_plays_module3():
+    assert 'games' in dir(pitching), 'Have you imported `games` from `data`?'
     assert 'plays:games:games:type:play' in get_assignments(pitching), 'Are you selecting just the rows that have a `type` of `play`?'
 
 @pytest.mark.test_select_all_strike_outs_module3

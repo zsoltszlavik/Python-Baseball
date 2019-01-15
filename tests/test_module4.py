@@ -7,6 +7,7 @@ from stats import offense
 
 @pytest.mark.test_select_all_plays_module4
 def test_select_all_plays_module4():
+    assert 'games' in dir(offense), 'Have you imported `games` from `data`?'
     assert 'plays:games:games:type:play' in get_assignments(offense), 'Select the `play` rows of the `games` DataFrame.'
     assert 'plays:columns:type:inning:team:player:count:pitches:event:game_id:year' in get_assignments(offense), 'Set the correct column labels of the `games` DataFrame.'
 

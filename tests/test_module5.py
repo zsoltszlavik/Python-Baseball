@@ -7,9 +7,9 @@ from stats import defense
 
 @pytest.mark.test_import_existing_dataframes_module5
 def test_import_existing_dataframes_module5():
-    assert 'games' in dir(defense), 'Have you imported `games` from `.data`?'
-    assert 'info' in dir(defense), 'Have you imported `games` from `.data`?'
-    assert 'events' in dir(defense), 'Have you imported `games` from `.data`?'
+    assert 'games' in dir(defense), 'Have you imported `games` from `frames`?'
+    assert 'info' in dir(defense), 'Have you imported `info` from `frames`?'
+    assert 'events' in dir(defense), 'Have you imported `events` from `frames`?'
 
 @pytest.mark.test_query_function_module5
 def test_query_function_module5():

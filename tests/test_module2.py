@@ -15,7 +15,7 @@ def test_import_matplotlib_module2():
 
 @pytest.mark.test_import_games_dataframe_module2
 def test_import_games_dataframe_module2():
-    assert 'games' in dir(attendance), 'Have you imported `games` from `.data`?'
+    assert 'games' in dir(attendance), 'Have you imported `games` from `data`?'
 
 @pytest.mark.test_select_attendance_module2
 def test_select_attendance_module2():
