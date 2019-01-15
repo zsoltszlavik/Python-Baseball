@@ -1,9 +1,11 @@
+import sys
 import pytest
 import matplotlib
 matplotlib.use('Agg')
 
 from .utils import *
 
+sys.path.append('../stats')
 from stats import defense
 
 @pytest.mark.test_import_existing_dataframes_module5

@@ -1,9 +1,11 @@
+import sys
 import pytest
 import matplotlib
 matplotlib.use('Agg')
 
 from .utils import *
 
+sys.path.append('../stats')
 from stats import offense
 
 @pytest.mark.test_select_all_plays_module4
