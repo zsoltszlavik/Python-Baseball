@@ -1,11 +1,8 @@
-import sys
 import pytest
 import matplotlib
 matplotlib.use('Agg')
 
-from .utils import *
-
-sys.path.append('../stats')
+from .utils import get_assignments, get_calls
 from stats import defense
 
 @pytest.mark.test_import_existing_dataframes_module5

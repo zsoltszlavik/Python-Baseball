@@ -1,11 +1,8 @@
-import sys
 import pytest
 import matplotlib
 matplotlib.use('Agg')
 
-from .utils import *
-
-sys.path.append('../stats')
+from .utils import get_assignments, get_calls
 from stats import offense
 
 @pytest.mark.test_select_all_plays_module4

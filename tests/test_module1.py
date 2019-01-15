@@ -1,7 +1,6 @@
 import pytest
 
-from .utils import *
-
+from .utils import get_assignments, get_calls, get_for_loops
 from stats import data
 
 @pytest.mark.test_import_builtin_libraries_module1

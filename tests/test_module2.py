@@ -1,11 +1,8 @@
-import sys
 import pytest
 import matplotlib
 matplotlib.use('Agg')
 
-from .utils import *
-
-sys.path.append('../stats')
+from .utils import get_assignments, get_calls
 from stats import attendance
 
 @pytest.mark.test_import_pandas_module2
