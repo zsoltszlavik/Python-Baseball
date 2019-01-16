@@ -56,7 +56,7 @@ def test_calculate_der_module5():
 
 @pytest.mark.test_reshape_with_pivot_module5
 def test_reshape_with_pivot_module5():
-    assert 'der:Name:defense:Name:loc:Attribute:defense:Name:year:Str:Index:Subscript:GtE:1978:Num:Compare:year:Str:defense:Str:DER:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(defense, include_type=True), 'Select just the rows of the `defense` DataFrame` with a year greater than 1978.'
+    assert 'der:Name:defense:Name:loc:Attribute:defense:Name:year:Str:Index:Subscript:GtE:1978:Num:Compare:year:Str:defense:Str:DER:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(defense, include_type=True), 'Select just the rows of the `defense` DataFrame with a year greater than 1978.'
     assert 'der:der:pivot:index:year:columns:defense:values:DER' in get_assignments(defense), 'Reshape the `defense` DataFrame with the `pivot()` function and the correct keyword arguments.'
 
 @pytest.mark.test_plot_formatting_xticks_module5
