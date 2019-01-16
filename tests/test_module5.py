@@ -28,7 +28,7 @@ def test_group_plate_appearances_module5():
     assert 'pa:pa:groupby:year:game_id:team:size:reset_index:name:PA' in get_assignments(defense), 'The plate appearances have not been group by `year` and `game_id`.'
 
 @pytest.mark.test_set_the_index_module5
-def test_unstack_the_dataframe_module5():
+def test_set_the_index_module5():
     assert 'events:events:set_index:year:game_id:team:event_type' in get_assignments(defense), 'Ensure you have set the index of the `events` DataFrame to `year` and `game_id`.'
 
 @pytest.mark.test_unstack_the_dataframe_module5
