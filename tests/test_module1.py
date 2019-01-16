@@ -18,13 +18,13 @@ def test_python_file_management_module1():
 
 @pytest.mark.test_sorting_file_names_module1
 def test_sorting_file_names_module1():
-    assert 'game_files:sort' in get_calls(data), 'Are you sorting the `game_files` in-place with sort()?'
+    assert 'game_files:sort' in get_calls(data), 'Are you sorting the `game_files` in-place with `sort()`?'
 
 @pytest.mark.test_read_csv_files_module1
 def test_read_csvs_module1():
     assert len(get_for_loops(data, 'dict')) != 0, 'Do you have a for loop that loops through the `game_files`?'
     assert get_for_loops(data, 'dict')[0]['target:id'] == 'game_file' and get_for_loops(data, 'dict')[0]['iter:id'] == 'game_files', 'Do you have a for loop that loops through the `game_files`?'
-    assert get_for_loops(data, 'dict')[0]['body'] == 'game_frame:pd:read_csv:game_file:names:type:multi2:multi3:multi4:multi5:multi6:event:game_frames:append:game_frame', 'Do you have a for loop that loops through the `game_files`?'
+    assert get_for_loops(data, 'dict')[0]['body'].startswith('game_frame:pd:read_csv:game_file:names:type:multi2:multi3:multi4:multi5:multi6:event'), 'Is there a call to the `pd.read_csv()` function in the body of the for loop?'
 
 @pytest.mark.test_append_event_frames_module1
 def test_append_event_frames_module1():
