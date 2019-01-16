@@ -5,8 +5,8 @@ from stats import data
 
 @pytest.mark.test_import_builtin_libraries_module1
 def test_import_builtin_libraries_module1():
-    assert 'os' in dir(data), 'Have you imported the `os` built-in library?'
-    assert 'glob' in dir(data), 'Have you imported the `os` built-in library?'
+    assert 'os' in dir(data), 'Have you imported the  built-in `os` library?'
+    assert 'glob' in dir(data), 'Have you imported the built-in `glob` library?'
 
 @pytest.mark.test_import_pandas_module1
 def test_import_pandas_module1():
