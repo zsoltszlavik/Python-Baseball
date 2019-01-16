@@ -19,7 +19,7 @@ def test_import_games_dataframe_module2():
 
 @pytest.mark.test_select_attendance_module2
 def test_select_attendance_module2():
-    assert 'attendance:Name:games:Name:loc:Attribute:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BitAnd:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True) or 'attendance:Name:games:Name:loc:Attribute:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BitAnd:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True), 'Have you selected the attendance rows with `loc[]`.'
+    assert 'attendance:Name:games:Name:loc:Attribute:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BitAnd:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True) or 'attendance:Name:games:Name:loc:Attribute:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BitAnd:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True), 'Have you selected the attendance rows with `loc[]`?'
 
 @pytest.mark.test_column_labels_module2
 def test_column_labels_module2():
