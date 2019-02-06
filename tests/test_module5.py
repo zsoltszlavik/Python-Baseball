@@ -52,7 +52,7 @@ def test_merge_team_module5():
 @pytest.mark.test_calculate_der_module5
 def test_calculate_der_module5():
     assert 'defense:loc:None:None:None:DER:1:defense:H:defense:ROE:defense:PA:defense:BB:defense:SO:defense:HBP:defense:HR' in get_assignments(defense), 'Are you using the `1 - ((H + ROE - HR) / (PA - BB - SO - HBP - HR))` formula to calculate the DER?'
-    assert 'defense:loc:None:None:None:year:pd:to_numeric:defense:year' in get_assignments(defense), 'Make sure to convert the `year` column of the `defense` DataFrame to numeric.'
+    assert 'defense:loc:None:None:None:year:pd:to_numeric:defense:loc:None:None:None:year' in get_assignments(defense), 'Make sure to convert the `year` column of the `defense` DataFrame to numeric.'
 
 @pytest.mark.test_reshape_with_pivot_module5
 def test_reshape_with_pivot_module5():
