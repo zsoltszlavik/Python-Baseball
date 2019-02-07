@@ -13,7 +13,19 @@ def test_import_existing_dataframes_module5():
 
 @pytest.mark.test_query_function_module5
 def test_query_function_module5():
-    assert "plays:games:query:type == 'play' & event != 'NP'" in get_assignments(defense), 'Use the `query()` function to select rows that have a `type` of `play`. Do not select any rows that have an event type of `NP`.'
+    try:
+        from stats import frames
+        
+        query = False
+        for string in get_assignments(defense):
+            if 'plays:games:query' in string:
+                query = True
+        assert query, 'Use the `query()` function to select rows that have a `type` of `play`. Do not select any rows that have an event type of `NP`.'
+        plays = defense.plays
+        plays.columns = ['type', 'inning', 'team', 'player', 'count', 'pitches', 'event', 'game_id', 'year']
+        assert frames.plays_frame.equals(plays), 'The `query()` function is not returning the correct data. Check your conditions.'
+    except ImportError:
+        raise AssertionError('It looks as if `data.py` is incomplete.')
 
 @pytest.mark.test_column_labels_module5
 def test_column_labels_module5():
@@ -52,7 +64,12 @@ def test_merge_team_module5():
 @pytest.mark.test_calculate_der_module5
 def test_calculate_der_module5():
     assert 'defense:loc:None:None:None:DER:1:defense:H:defense:ROE:defense:PA:defense:BB:defense:SO:defense:HBP:defense:HR' in get_assignments(defense), 'Are you using the `1 - ((H + ROE - HR) / (PA - BB - SO - HBP - HR))` formula to calculate the DER?'
-    assert 'defense:loc:None:None:None:year:pd:to_numeric:defense:loc:None:None:None:year' in get_assignments(defense), 'Make sure to convert the `year` column of the `defense` DataFrame to numeric.'
+    no_loc = 'defense:year:pd:to_numeric:defense:year' in get_assignments(defense)
+    both_loc = 'defense:loc:None:None:None:year:pd:to_numeric:defense:loc:None:None:None:year' in get_assignments(defense)
+    left_loc = 'defense:loc:None:None:None:year:pd:to_numeric:defense:year' in get_assignments(defense)
+    right_loc = 'defense:year:pd:to_numeric:defense:loc:None:None:None:year' in get_assignments(defense)
+
+    assert no_loc or both_loc or left_loc or right_loc, 'Make sure to convert the `year` column of the `defense` DataFrame to numeric.'
 
 @pytest.mark.test_reshape_with_pivot_module5
 def test_reshape_with_pivot_module5():

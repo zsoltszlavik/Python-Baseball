@@ -39,7 +39,6 @@ def convert_ast(node, return_type='string', include_type=False, sep=':'):
 
     if return_type == 'string':
         return sep.join([value for value in _format(node).values() if value])
-
     elif return_type == 'list':
         return list(_format(node).values())
     else:
