@@ -1,22 +1,15 @@
 FROM codeschool/projects-cli:${PROJECTS_CLI_BUILD_TAG:-latest} as projects-cli
-FROM python:3.6-alpine
+FROM python:3.7.2-slim-stretch
 
-RUN apk add --no-cache libpng freetype libstdc++ python py-pip bash shadow nodejs git
-RUN apk add --no-cache --virtual .build-deps \
-        gcc \
-        build-base \
-        python-dev \
-        libpng-dev \
-        musl-dev \
-        freetype-dev
-
-SHELL ["/bin/bash", "-c"]
+RUN apt-get update
+RUN apt-get install -y curl gnupg2 git
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt-get install -y nodejs
 WORKDIR /opt/
-COPY requirements.txt .
 
+COPY requirements.txt .
 RUN ["pip", "install", "-r", "requirements.txt"]
 
-# Create a psprojects user to default the running container to
 RUN \
   useradd -b /opt -c "psprojects" -M psprojects && \
   chown -R psprojects:psprojects /opt && \
@@ -28,5 +21,4 @@ ENV HOME=/home/psprojects
 USER psprojects
 RUN ["touch", "/home/psprojects/.bashrc"]
 
-# copy the projects-cli from it's container image.
 COPY --from=projects-cli /opt/projects-cli /opt/projects-cli
