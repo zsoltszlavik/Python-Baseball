@@ -15,7 +15,6 @@ def test_import_existing_dataframes_module5():
 def test_query_function_module5():
     try:
         from stats import frames
-        
         query = False
         for string in get_assignments(defense):
             if 'plays:games:query' in string:
