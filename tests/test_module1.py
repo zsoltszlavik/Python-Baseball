@@ -5,7 +5,7 @@ from stats import data
 
 @pytest.mark.test_import_builtin_libraries_module1
 def test_import_builtin_libraries_module1():
-    assert 'os' in dir(data), 'Have you imported the  built-in `os` library?'
+    assert 'os' in dir(data), 'Have you imported the built-in `os` library?'
     assert 'glob' in dir(data), 'Have you imported the built-in `glob` library?'
 
 @pytest.mark.test_import_pandas_module1
@@ -22,8 +22,8 @@ def test_sorting_file_names_module1():
 
 @pytest.mark.test_read_csv_files_module1
 def test_read_csvs_module1():
-    assert len(get_for_loops(data, 'dict')) != 0, 'Do you have a for loop that loops through the `game_files`?'
-    assert get_for_loops(data, 'dict')[0]['target:id'] == 'game_file' and get_for_loops(data, 'dict')[0]['iter:id'] == 'game_files', 'Do you have a for loop that loops through the `game_files`?'
+    assert len(get_for_loops(data, 'dict')) != 0, 'Do you have a `for` loop that loops through the `game_files`?'
+    assert get_for_loops(data, 'dict')[0]['target:id'] == 'game_file' and get_for_loops(data, 'dict')[0]['iter:id'] == 'game_files', 'Do you have a `for` loop that loops through the `game_files`?'
     assert get_for_loops(data, 'dict')[0]['body'].startswith('game_frame:pd:read_csv:game_file:names:type:multi2:multi3:multi4:multi5:multi6:event'), 'Is there a call to the `pd.read_csv()` function in the body of the for loop?'
 
 @pytest.mark.test_append_event_frames_module1
@@ -37,7 +37,7 @@ def test_concatenate_dataframes_module1():
 
 @pytest.mark.test_clean_values_module1
 def test_clean_values_module1():
-    assert 'games:loc:games:multi5:??:multi5' in get_assignments(data), 'Are you replacing the `??` value in the `multi5` column with an empty string?'
+    assert 'games:loc:games:multi5:??:multi5' in get_assignments(data), 'Are you replacing the `??` value in the `multi5` column with an empty string `\'\'`?'
 
 @pytest.mark.test_extract_identifiers_module1
 def test_extract_identifiers_module1():
@@ -57,7 +57,7 @@ def test_concatenate_identifier_columns_module1():
 
 @pytest.mark.test_fill_nan_values_module1
 def test_fill_nan_values_module1():
-    assert 'games:games:fillna: ' in get_assignments(data), 'The NaN values in the `identifiers` DataFrames have not been fill with a space'
+    assert 'games:games:fillna: ' in get_assignments(data), 'The `NaN` values in the `identifiers` DataFrames have not been fill with a space.'
 
 @pytest.mark.test_categorical_event_type_module1
 def test_categorical_event_type_module1():
@@ -65,4 +65,4 @@ def test_categorical_event_type_module1():
 
 @pytest.mark.test_print_dataframe_module1
 def test_print_dataframe_module1():
-    assert 'print:games:head' in get_calls(data) or 'print:games:head:5' in get_calls(data), 'To check the `games` DataFrame, print the first five rows.'
+    assert 'print:games:head' in get_calls(data) or 'print:games:head:5' in get_calls(data), 'To check the `games` DataFrame, `print()` the first five rows with `head()`.'

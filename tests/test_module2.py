@@ -36,8 +36,8 @@ def test_plot_dataframe_module2():
 
 @pytest.mark.test_axis_labels_module2
 def test_axis_labels_module2():
-    assert 'plt:xlabel:Year' in get_calls(attendance), 'Label the x-axis: Year'
-    assert 'plt:ylabel:Attendance' in get_calls(attendance), 'Label the y-axis: Attendance'
+    assert 'plt:xlabel:Year' in get_calls(attendance), 'The x-axis label should be \'Year\'.'
+    assert 'plt:ylabel:Attendance' in get_calls(attendance), 'The y-axis label should be \'Attendance\'.'
 
 @pytest.mark.test_mean_line_module2
 def test_mean_line_module2():

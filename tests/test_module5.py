@@ -28,7 +28,7 @@ def test_query_function_module5():
 
 @pytest.mark.test_column_labels_module5
 def test_column_labels_module5():
-    assert 'plays:columns:type:inning:team:player:count:pitches:event:game_id:year' in get_assignments(defense), 'The columns labels of the `play` DataFrame have not been renamed.'
+    assert 'plays:columns:type:inning:team:player:count:pitches:event:game_id:year' in get_assignments(defense), 'The column labels of the `play` DataFrame have not been renamed.'
 
 @pytest.mark.test_shift_dataframe_module5
 def test_shift_dataframe_module5():
@@ -49,7 +49,7 @@ def test_unstack_the_dataframe_module5():
 @pytest.mark.test_manage_column_labels_module5
 def test_manage_column_labels_module5():
     assert 'events:columns:events:columns:droplevel' in get_assignments(defense), 'Make sure to drop a level of labels from the `events` DataFrame.'
-    assert 'events:columns:year:game_id:team:BB:E:H:HBP:HR:ROE:SO' in get_assignments(defense), 'The columns labels of the `events` DataFrame have not been renamed.'
+    assert 'events:columns:year:game_id:team:BB:E:H:HBP:HR:ROE:SO' in get_assignments(defense), 'The column labels of the `events` DataFrame have not been renamed.'
     assert 'events:events:rename_axis:None:axis:columns' in get_assignments(defense), 'Have you renamed the index column using the `rename_axis()` function?'
 
 @pytest.mark.test_merge_plate_appearances_module5
