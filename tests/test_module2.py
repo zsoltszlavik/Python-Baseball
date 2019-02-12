@@ -21,9 +21,14 @@ def test_import_games_dataframe_module2():
 def test_select_attendance_module2():
     try:
         from data import games
-        test_attendance = games.loc[(games['type'] == 'info') & (games['multi2'] == 'attendance'), ['year', 'multi3']]
+        local_attendance = games.loc[(games['type'] == 'info') & (games['multi2'] == 'attendance'), ['year', 'multi3']]
         assert 'attendance' in dir(attendance), 'Have you selected the attendance rows with `loc[]`, and assigned the resulting DataFrame to a variable called `attendance`?'
-        assert attendance.attendance.equals(test_attendance), 'Have you selected the attendance rows with `loc[]`?'
+
+        if 'multi3' not in attendance.attendance.columns:
+            local_attendance.columns = ['year', 'attendance']
+
+        assert attendance.attendance.equals(local_attendance), 'Have you selected the attendance rows with `loc[]`?'
+
     except ImportError:
         print('It looks as if `data.py` is incomplete.')
 
