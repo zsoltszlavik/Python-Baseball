@@ -54,7 +54,25 @@ def test_manage_column_labels_module5():
 
 @pytest.mark.test_merge_plate_appearances_module5
 def test_merge_plate_appearances_module5():
-    assert 'events_plus_pa:pd:merge:events:pa:how:outer:left_on:year:game_id:team:right_on:year:game_id:team' in get_assignments(defense), 'Have the `events` DataFrame and the `pa` DataFrame been merged with the correct keyword arguments?'
+    merge = False
+    how = False
+    left_on = False
+    right_on = False
+
+    for string in get_assignments(defense):
+        if 'events_plus_pa:pd:merge:events:pa' in string:
+            merge = True
+        if 'how:outer' in string:
+            how = True
+        if 'left_on:year:game_id:team' in string:
+            left_on = True
+        if 'right_on:year:game_id:team' in string:
+            right_on = True
+
+    assert merge, 'Are you calling `pd.merge()` to merge the `events` and `pa` DataFrames?'
+    assert how, 'Does the call to `pd.merge()` have a keyword argument of `how` set to `\'outer\'`?'
+    assert left_on, "Does the call to `pd.merge()` have a keyword argument of `left_on` set to `\'['year', 'game_id', 'team']\'`?"
+    assert right_on, "Does the call to `pd.merge()` have a keyword argument of `right_on` set to `\'['year', 'game_id', 'team']\'`?"
 
 @pytest.mark.test_merge_team_module5
 def test_merge_team_module5():
@@ -73,7 +91,26 @@ def test_calculate_der_module5():
 @pytest.mark.test_reshape_with_pivot_module5
 def test_reshape_with_pivot_module5():
     assert 'der:Name:defense:Name:loc:Attribute:defense:Name:year:Str:Index:Subscript:GtE:1978:Num:Compare:year:Str:defense:Str:DER:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(defense, include_type=True), 'Select just the rows of the `defense` DataFrame with a year greater than 1978.'
-    assert 'der:der:pivot:index:year:columns:defense:values:DER' in get_assignments(defense), 'Reshape the `defense` DataFrame with the `pivot()` function and the correct keyword arguments.'
+
+    pivot = False
+    index = False
+    columns = False
+    values = False
+
+    for string in get_assignments(defense):
+        if 'der:der:pivot' in string:
+            pivot = True
+        if 'index:year' in string:
+            index = True
+        if 'columns:defense' in string:
+            columns = True
+        if 'values:DER' in string:
+            values = True
+
+    assert pivot, 'Are you calling `pivot()` on the `der` DataFrame?'
+    assert index, 'Does the call to `pivot()` have a keyword argument of `index` set to `\'year\'`?'
+    assert columns, 'Does the call to `pivot()` have a keyword argument of `columns` set to `\'defense\'`?'
+    assert values, 'Does the call to `pivot()` have a keyword argument of `values` set to `\'DER\'`?'
 
 @pytest.mark.test_plot_formatting_xticks_module5
 def test_plot_formatting_xticks_module5():

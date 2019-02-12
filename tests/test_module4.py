@@ -45,7 +45,25 @@ def test_sort_values_module4():
 
 @pytest.mark.test_reshape_with_pivot_module4
 def test_reshape_with_pivot_module4():
-    assert 'hits:hits:pivot:index:inning:columns:hit_type:values:count' in get_assignments(offense), 'Make sure to reshape the `hits` DataFrame with the `pivot()` function. Ensure you have set the correct keyword arguments.'
+    pivot = False
+    index = False
+    columns = False
+    values = False
+
+    for string in get_assignments(offense):
+        if 'hits:hits:pivot' in string:
+            pivot = True
+        if 'index:inning' in string:
+            index = True
+        if 'columns:hit_type' in string:
+            columns = True
+        if 'values:count' in string:
+            values = True
+
+    assert pivot, 'Are you calling `pivot()` on the `hits` DataFrame?'
+    assert index, 'Does the call to `pivot()` have a keyword argument of `index` set to `\'inning\'`?'
+    assert columns, 'Does the call to `pivot()` have a keyword argument of `columns` set to `\'strike_outs\'`?'
+    assert values, 'Does the call to `pivot()` have a keyword argument of `values` set to `\'count\'`?'
 
 @pytest.mark.test_stacked_bar_plot_module4
 def test_stacked_bar_plot_module4():

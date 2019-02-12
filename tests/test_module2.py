@@ -1,5 +1,7 @@
 import pytest
 import matplotlib
+import numpy as np
+import pandas as pd
 matplotlib.use('Agg')
 
 from .utils import get_assignments, get_calls
@@ -27,8 +29,10 @@ def test_select_attendance_module2():
         if 'multi3' not in attendance.attendance.columns:
             local_attendance.columns = ['year', 'attendance']
 
-        assert attendance.attendance.equals(local_attendance), 'Have you selected the attendance rows with `loc[]`?'
+        if attendance.attendance['attendance'].dtype == np.int64:
+            local_attendance.loc[:, 'attendance'] = pd.to_numeric(local_attendance.loc[:, 'attendance'])
 
+        assert attendance.attendance.equals(local_attendance), 'Have you selected the attendance rows with `loc[]`?'
     except ImportError:
         print('It looks as if `data.py` is incomplete.')
 
@@ -42,7 +46,28 @@ def test_convert_to_numeric_module2():
 
 @pytest.mark.test_plot_dataframe_module2
 def test_plot_dataframe_module2():
-    assert 'attendance:plot:x:year:y:attendance:figsize:15:7:kind:bar' in get_calls(attendance), 'Plot the `year` on the x-axis and the `attendance` on the y-axis of a bar plot. Adjust the size of the plot.'
+    plot = False
+    x = False
+    y = False
+    figsize = False
+    kind = False
+    for string in get_calls(attendance):
+        if 'attendance:plot' in string:
+            plot = True
+        if 'x:year' in string:
+            x = True
+        if 'y:attendance' in string:
+            y = True
+        if 'figsize:15:7' in string:
+            figsize = True
+        if 'kind:bar' in string:
+            kind = True
+
+    assert plot, 'Are you calling `plot()` on the `attendance` DataFrame?'
+    assert x, 'Does the call to `plot()` have a keyword argument of `x` set to `\'year\'`?'
+    assert y, 'Does the call to `plot()` have a keyword argument of `y` set to `\'attendance\'`?'
+    assert figsize, 'Does the call to `plot()` have a keyword argument of `figsize` set to `(15, 7)`?'
+    assert kind, 'Does the call to `plot()` have a keyword argument of `kind` set to `\'bar\'`?'
     assert 'plt:show' in get_calls(attendance), 'Have you shown the plot?'
 
 @pytest.mark.test_axis_labels_module2
@@ -52,4 +77,25 @@ def test_axis_labels_module2():
 
 @pytest.mark.test_mean_line_module2
 def test_mean_line_module2():
-    assert 'plt:axhline:y:attendance:attendance:mean:label:Mean:linestyle:--:color:green' in get_calls(attendance), 'Plot a green dashed line at the mean.'
+    axhline = False
+    y = False
+    label = False
+    linestyle = False
+    color = False
+    for string in get_calls(attendance):
+        if 'plt:axhline' in string:
+            axhline = True
+        if 'y:attendance:attendance:mean' in string:
+            y = True
+        if 'label:Mean' in string:
+            label = True
+        if 'linestyle:--' in string:
+            linestyle = True
+        if 'color:green' in string:
+            color = True
+
+    assert axhline, 'Are you calling `plt.axhline()`?'
+    assert y, 'Does the call to `plt.axhline()` have a keyword argument of `y` set to `attendance[\'attendance\'].mean()`?'
+    assert label, 'Does the call to `plt.axhline()` have a keyword argument of `label` set to `\'Mean\'`?'
+    assert linestyle, 'Does the call to `plt.axhline()` have a keyword argument of `linestyle` set to `\'--\'`?'
+    assert color, 'Does the call to `plt.axhline()` have a keyword argument of `color` set to `\'green\'`?'

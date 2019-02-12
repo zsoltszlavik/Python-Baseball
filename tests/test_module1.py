@@ -53,7 +53,26 @@ def test_rename_columns_module1():
 
 @pytest.mark.test_concatenate_identifier_columns_module1
 def test_concatenate_identifier_columns_module1():
-    assert 'games:pd:concat:games:identifiers:axis:1:sort:False' in get_assignments(data), 'Concatenate the `games` and `identifiers` DataFrames.'
+    concat = False
+    frames = False
+    axis = False
+    sort = False
+
+    for string in get_assignments(data):
+        if 'games:pd:concat' in string:
+            concat = True
+        if 'games:identifiers' in string:
+            frames = True
+        if 'axis:1' in string:
+            axis = True
+        if 'sort:False' in string:
+            sort = True
+
+    assert concat, 'Are you calling `pd.concat()`?'
+    assert frames, 'Does the call to `pd.concat()` have a list of DataFrames to concatenate as the first argument? Make sure the frames are in the correct order.'
+    assert axis, 'Does the call to `pd.concat()` have a keyword argument of `axis` set to `1`?'
+    assert sort, 'Does the call to `pd.concat()` have a keyword argument of `sort` set to `False`?'
+
 
 @pytest.mark.test_fill_nan_values_module1
 def test_fill_nan_values_module1():
