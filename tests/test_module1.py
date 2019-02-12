@@ -61,7 +61,7 @@ def test_fill_nan_values_module1():
 
 @pytest.mark.test_categorical_event_type_module1
 def test_categorical_event_type_module1():
-    assert 'games:loc:None:None:None:type:pd:Categorical:games:loc:None:None:None:type' in get_assignments(data), 'Save some memory by making the type column Categorical.'
+    assert 'games:loc:None:None:None:type:pd:Categorical:games:loc:None:None:None:type' in get_assignments(data), 'Save some memory by making the `type` column Categorical.'
 
 @pytest.mark.test_print_dataframe_module1
 def test_print_dataframe_module1():
