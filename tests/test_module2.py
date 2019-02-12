@@ -19,7 +19,13 @@ def test_import_games_dataframe_module2():
 
 @pytest.mark.test_select_attendance_module2
 def test_select_attendance_module2():
-    assert 'attendance:Name:games:Name:loc:Attribute:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BitAnd:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True) or 'attendance:Name:games:Name:loc:Attribute:games:Name:multi2:Str:Index:Subscript:Eq:attendance:Str:Compare:BitAnd:games:Name:type:Str:Index:Subscript:Eq:info:Str:Compare:BinOp:year:Str:multi3:Str:List:Tuple:Index:Subscript:Assign' in get_assignments(attendance, include_type=True), 'Have you selected the attendance rows with `loc[]`?'
+    try:
+        from data import games
+        test_attendance = games.loc[(games['type'] == 'info') & (games['multi2'] == 'attendance'), ['year', 'multi3']]
+        assert 'attendance' in dir(attendance), 'Have you selected the attendance rows with `loc[]`, and assigned the resulting DataFrame to a variable called `attendance`?'
+        assert attendance.attendance.equals(test_attendance), 'Have you selected the attendance rows with `loc[]`?'
+    except ImportError:
+        print('It looks as if `data.py` is incomplete.')
 
 @pytest.mark.test_column_labels_module2
 def test_column_labels_module2():
