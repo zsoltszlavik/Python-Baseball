@@ -13,6 +13,8 @@ for game_file in game_files:
 
 games = pd.concat(game_frames)
 
+#Use the loc[] function to select rows that have a value of ?? in the multi5 column in the games DataFrame.
+#Replace ?? with an empty string.
 games.loc[games['multi5'] == '??', ['multi5']] = ''
 
 #Call the extract() function of the str namespace on this column. Hint: dataframe['column'].str.extract()
